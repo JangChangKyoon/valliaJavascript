@@ -65,11 +65,74 @@ window.addEventListener('copy', handleWindowCopy);
 
 // style은 CSS를 통해서 변경되어야 한다.
 
-//----------------------------
+//-------------------------------------------------------------------------
 
+const h1 = document.querySelector('div.hello h1'); //대상 선택
 //개선2 : toggle 사용
 function handleTitleClick() {
   h1.classList.toggle('clicked');
 }
-
 h1.addEventListener('click', handleTitleClick);
+
+//css 동시 사용시
+// function handleTitleClick() {
+//   const currentColor = h1.style.color;
+//   let newColor;
+//   if (currentColor === 'blue') {
+//     newColor = 'tomato';
+//   } else {
+//     newColor = 'blue';
+//   }
+//   h1.style.color = newColor;
+// }
+
+//css 분리 사용시
+// function handleTitleClick() {
+//     //className을 설정하는 것으로 글자색 설정
+//     //생바꿈은 css파일에 설정
+//     const clickedClass = 'clicked sexy-font';
+//     if (h1.className === clickedClass) {
+//       h1.className = '';
+//     } else {
+//       h1.className = clickedClass;
+//     }
+//   }
+
+//개선1 : classList 사용
+// function handleTitleClick() {
+//   const clickedClass = 'clicked';
+//   if (h1.classList.contains(clickedClass)) {
+//     h1.classList.remove(clickedClass);
+//   } else {
+//     h1.classList.add(clickedClass);
+//   }
+// }
+
+//개선2 : toggle 사용
+// function handleTitleClick() {
+//   h1.classList.toggle('clicked');
+// }
+
+// h1.addEventListener('click', handleTitleClick);
+
+// js에서 event 이용하기
+// 1) element를 찾기
+// 2) event를 listen
+// 3) event에 반응하기(보여주거나 감추거나 클릭하는것) -함수 안
+
+// classList 우리가 class들의 목록으로 작업할수 있게끔 허용해준다.
+// className은 이전calss를 상관하지않고 모든걸 교체해 버린다.
+
+//classList를 이용하는건
+// js에서 건드리는건 HTML element가 가지고있는 또하나의 요소 사용하는 것이다.
+// = element의 class내용물을 조작하는 것을 허용한다는 뜻
+
+// contains은 우리가 명시한 class가 HTML element의 class에 포함되어 있는지 말해준다
+
+// toggle은 토큰이 존재하면 토큰제거
+// 토큰존재 하지않으면 토큰 추가
+
+// ex)
+// toggle은 h1의 classList에 clicked class가 이미있는지 확인하여
+// 만약있다면 toggle 이 clicked를 제거해준다
+// 만약 class name이 존재하지 않는다면 toggle은 classname 추가
