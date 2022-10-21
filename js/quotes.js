@@ -42,8 +42,16 @@ const quotes = [
   },
 ];
 
+//명언 변수에 저장하기
 const quote = document.querySelector('#quote span:first-child');
+
+//저자 변수에 저장하기
 const author = document.querySelector('#quote span:last-child');
+
+// 랜덤으로 명언 가져와서 변수에 저장하기
+// Math.floor는 소수점을 버리는 것(버림),
+// Math.ceil은 소수점을 올리는 것(올림),
+// Math.round는 소수점을 반올림 하는 것입니다.
 const todaysQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
 quote.innerText = todaysQuote.quote;
