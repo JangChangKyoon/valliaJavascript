@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .randomRange {
+      margin-bottom: 20px;
+    }
+    .result {
+      display: none;
+    }
+  </style>
+
+  <body>
+    <h1>Random Number Game</h1>
+    <form class="gen">
+      <div class="randomRange">
+        <span>Generate a number between 0 and</span>
+        <input class="randomRangeInput" type="number" />
+      </div>
+      <div class="putNum">
+        <span>Guess the number</span>
+        <input class="numberInput" type="number" />
+        <input class="submitNum" type="submit" value="Play!" />
+      </div>
+      <div class="result">
+        <span>You chose:</span>
+        <span class="youChose"></span>
+        <span>,the machine chose</span>
+        <span class="machineChose"></span>
+      </div>
+      <div class="judgment"></div>
+    </form>
+
+    <script>
+      const randomRange = document.querySelector(".randomRangeInput");
+      const numberInput = document.querySelector(".numberInput");
+      const formation = document.querySelector(".gen");
+      const youChose = document.querySelector(".youChose");
+      const machineChose = document.querySelector(".machineChose");
+      const resultClasslist = document.querySelector(".result").classList;
+      const judgment = document.querySelector(".judgment");
+
+      function play(event) {
+        event.preventDefault();
+
+        //input 값 가져오기
+        const a = randomRange.value;
+        const b = numberInput.value;
+        const randomNum = Math.ceil(Math.random() * a || 0);
+        console.log(
+          "랜덤범위 : " + a,
+          "선택번호 : " + b,
+          "랜덤번호 : " + randomNum
+        );
+        if (resultClasslist.length == 1) {
+          resultClasslist.remove("result");
+        }
+
+        youChose.innerHTML = b;
+        machineChose.innerText = randomNum;
+
+        jug(b, randomNum);
+      }
+
+      function jug(a, b) {
+        const span = document.createElement("span");
+        if (a == b) {
+          span.innerText = "You win!";
+        } else {
+          span.innerText = "You lose!";
+        }
+        console.log(a, b);
+        judgment.appendChild(span);
+        if (judgment.appendChild(span)) {
+          judgment.replaceChildren(span);
+        }
+      }
+
+      formation.addEventListener("submit", play);
+    </script>
+  </body>
+</html>

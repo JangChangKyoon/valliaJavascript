@@ -1,6 +1,4 @@
 //object 만들기
-const player
-
 
 //----------------
 const player = {

@@ -1,5 +1,3 @@
-//이밴트 목록  https://developer.mozilla.org/ko/docs/Web/Events
-
 //--------------------------------------------------
 //마우스 클릭 이벤트 설정
 const h1 = document.querySelector('div.hello h1'); //대상 선택
@@ -15,9 +13,31 @@ document.querySelector('h1.hell').addEventListener('click', handleTitleClick);
 //=b2.addEventListener('click', handleTitleClick);
 // title.onmouseenter = handleMouseEnter;
 
+function handleMouseEnter() {
+  h1.innerText = 'Mouse is here';
+}
+
 //------------------------------------------------------
 
+//hovering 시 텍스트 변경
+function handleMouseLeave() {
+  h1.innerText = 'Mouse is gone';
+}
+
+h1.addEventListener('mouseenter', handleMouseEnter);
+//=b2.addEventListener('mouseenter', handleMouseEnter);
+h1.addEventListener('mouseleave', handleMouseLeave);
+// b2.addEventListener('mouseleave', handleMouseLeave);
+
+// handleTitleClick();
+
 //-------------------------------------
+//창크기를 변경할 때마다 배경색이 달라짐
+function handleWindowResize() {
+  document.body.style.backgroundColor = 'tomato';
+}
+
+window.addEventListener('resize', handleWindowResize);
 
 //---------------------------------------
 //복사했을 때 이벤트
@@ -47,7 +67,7 @@ window.addEventListener('copy', handleWindowCopy);
 
 //-------------------------------------------------------------------------
 
-// const h1 = document.querySelector('div.hello h1'); //대상 선택
+const h1 = document.querySelector('div.hello h1'); //대상 선택
 //개선2 : toggle 사용
 function handleTitleClick() {
   h1.classList.toggle('clicked');
@@ -116,92 +136,3 @@ h1.addEventListener('click', handleTitleClick);
 // toggle은 h1의 classList에 clicked class가 이미있는지 확인하여
 // 만약있다면 toggle 이 clicked를 제거해준다
 // 만약 class name이 존재하지 않는다면 toggle은 classname 추가
-
-// -------------------------------------------------
-//세번째 줄 수정
-
-const hello = document.querySelector('h1.hell');
-const color = ['red'];
-
-const superEventHandler1 = {
-  //클릭시 글자색 및 텍스트 변경
-  helloClick: function () {
-    hello.classList.toggle('clicked');
-    if (hello.innerHTML === 'hello!') {
-      hello.innerHTML = 'it is right clicked';
-    } else {
-      hello.innerHTML = 'hello!';
-    }
-  },
-
-  //창크기를 변경할 때마다 배경색이 달라짐
-  handleWindowResize: function () {
-    document.body.style.backgroundColor = color[0];
-    hello.innerHTML = 'resizing';
-  },
-  // 마우스hovering 올리면 글자 변경
-  handleMouseEnter: function () {
-    hello.innerText = 'Mouse is here';
-  },
-
-  //hovering 시 텍스트 변경
-  handleMouseLeave: function () {
-    hello.innerText = 'Mouse is gone';
-  },
-};
-
-window.addEventListener('resize', superEventHandler1.handleWindowResize);
-hello.addEventListener('contextmenu', superEventHandler1.helloClick);
-hello.addEventListener('mouseenter', superEventHandler1.handleMouseEnter);
-//=b2.addEventListener('mouseenter', handleMouseEnter);
-hello.addEventListener('mouseleave', superEventHandler1.handleMouseLeave);
-// b2.addEventListener('mouseleave', handleMouseLeave);
-// handleTitleClick();
-
-//------------------------------------------------
-
-//superEventHandler
-//정답
-const h2 = document.querySelector('h1.others');
-const colors = ['#1abc9c', '#3498db', '#9b59b6', '#f39c12', '#e74c3c'];
-
-const superEventHandler2 = {
-  handleEnter: function () {
-    h2.innerText = 'The mouse is here!';
-    h2.style.color = colors[0];
-  },
-  handleLeave: function () {
-    h2.innerText = 'The mouse is gone!';
-    h2.style.color = colors[1];
-  },
-  handleResize: function () {
-    h2.innerText = 'You just resized!';
-    h2.style.color = colors[2];
-  },
-  handleSelect: function () {
-    h2.innerText = "You're selecting me!";
-    h2.style.color = colors[3];
-  },
-  handleContext: function () {
-    h2.innerHTML = 'That was a right click!';
-    h2.style.color = colors[4];
-  },
-};
-
-h2.addEventListener('mouseenter', superEventHandler2.handleEnter);
-h2.addEventListener('mouseleave', superEventHandler2.handleLeave);
-window.addEventListener('resize', superEventHandler2.handleResize);
-window.addEventListener('contextmenu', superEventHandler2.handleContext);
-
-function colorHandle() {
-  if (window.innerWidth < 400) {
-    hello.style.backgroundColor = colors[0];
-  } else if (window.innerWidth >= 400 && window.innerWidth < 600) {
-    hello.style.backgroundColor = colors[1];
-  } else {
-    hello.style.backgroundColor = colors[2];
-  }
-}
-
-colorHandle();
-window.addEventListener('resize', colorHandle);

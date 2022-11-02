@@ -1,10 +1,10 @@
 //Selector Variable 변수
-const clock = document.querySelector('h2#clock');
+const clock = document.querySelector("h2#clock");
 
 //--------------------------------------------------
 //functions time prac
 function sayHello() {
-  console.log('hello');
+  console.log("setInterval");
 }
 
 //5초(5000ms)마다 console에 호출
@@ -18,9 +18,9 @@ function getClock() {
   const date = new Date();
   // 숫자를 02 -> 이런식으로 바꾸기 : by "padStart"
   //clock.innerHTML = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
   clock.innerText = `${hours}:${minutes}:${seconds}`;
 }
 

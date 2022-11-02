@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      height: 500px;
+    }
+    .timediv {
+      background-color: red;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      height: 100%;
+      justify-content: center;
+    }
+    .timediv__child {
+      text-align: left;
+    }
+  </style>
+  <body>
+    <div class="timediv">
+      <div class="timediv__child">
+        <h1>Time Until Christmas Eve</h1>
+        <h2 class="clock">000d 00h 00m 00s</h2>
+      </div>
+    </div>
+
+    <script>
+      const clock = document.querySelector("h2.clock");
+      let contDate = new Date("dec 24, 2022 00:00:00").getTime();
+      function newYear() {
+        let now = new Date().getTime();
+        let gap = contDate - now;
+
+        let second = 1000;
+        let minute = second * 60;
+        let hour = minute * 60;
+        let day = hour * 24;
+
+        let d = String(Math.floor(gap / day)).padStart(3, "0");
+        let h = String(Math.floor((gap % day) / hour)).padStart(2, "0");
+        let m = String(Math.floor((gap % hour) / minute)).padStart(2, "0");
+        let s = String(Math.floor((gap % minute) / second)).padStart(2, "0");
+
+        clock.innerText = `${d}d ${h}h ${m}m ${s}s`;
+      }
+      setInterval(function () {
+        newYear();
+      }, 1000);
+    </script>
+  </body>
+</html>
