@@ -2,3 +2,21 @@
 .hidden {
   display: none;
 }
+
+.pic img {
+  width: 800px;
+  height: 500px;
+  border-radius: 50pt;
+}
+
+body {
+  background-color: wheat;
+
+  opacity: 0.7;
+}
+
+#todo-form {
+  margin: 10px, 10px;
+  border: 15px 15px;
+  border-color: blue;
+}
