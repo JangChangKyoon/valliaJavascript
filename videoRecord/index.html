@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Player</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <button id="turnOn">turn On</button>
+    <button id="recodeBtn">Start Recording</button>
+    <video id="preview"></video>
+    <script>
+      const recordBtn = document.getElementById("recodeBtn");
+      const video = document.getElementById("preview");
+      const turnOn = document.getElementById("turnOn");
+
+      let stream;
+      let recorder;
+      let videoFile;
+
+      const download = () => {
+        const a = document.createElement("a");
+        a.href = videoFile;
+        a.download = "download";
+        document.body.appendChild(a);
+        a.click();
+      };
+
+      const recordStop = () => {
+        recordBtn.innerHTML = "download";
+        recordBtn.removeEventListener("click", recordStop);
+        recordBtn.addEventListener("click", download);
+      };
+
+      const recordStart = () => {
+        recordBtn.innerHTML = "stop";
+        recordBtn.removeEventListener("click", recordStart);
+        recordBtn.addEventListener("click", recordStop);
+
+        recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+        // recorder.ondataavailable = (e) => {
+        //   console.log("recording done");
+        //   console.log(e);
+        //   console.log("e.data : 다운로드할 대상") + console.log(e.data);
+        // };
+        // console.log(recorder);
+
+        recorder.ondataavailable = (event) => {
+          // 브라우저 메모리에 저장
+          //   console.log(event.data)
+          videoFile = URL.createObjectURL(event.data);
+          video.srcObject = null;
+          video.src = videoFile; // html tag 속성 추가
+          // 미리보기 반복 재생
+          video.loop = true;
+          // 녹화 비디오 재생
+          video.play();
+        };
+        recorder.start();
+        setTimeout(() => {
+          recorder.stop();
+        }, 5000);
+      };
+
+      const getMedia = async () => {
+        console.log("hello");
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+          video: true,
+        });
+
+        // console.log(stream);
+        video.srcObject = stream;
+        video.play();
+      };
+
+      turnOn.addEventListener("click", getMedia);
+      recordBtn.addEventListener("click", recordStart);
+    </script>
+  </body>
+</html>

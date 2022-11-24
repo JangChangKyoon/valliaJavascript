@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Player</title>
+    <meta charset="UTF-8" />
+    <script
+      src="https://kit.fontawesome.com/6ade36b36a.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="./src/index.js" defer></script>
+  </head>
+
+  <body>
+    <video
+      controls
+      width="700px"
+      src="https://serranoarevalo.github.io/notflix/9bfd1023900e31286103369c803c7ee9.ogv"
+    ></video>
+    <div id="videoController">
+      <i id="playPauseBtn" class="fas fa-play"></i>
+      <i id="volume" class="fas fa-volume-up"></i>
+      <input
+        type="range"
+        step="0.1"
+        value="0.5"
+        min="0"
+        max="1"
+        id="volumeRange"
+      />
+
+      <input type="range" step="1" value="0" min="0" max="52" id="timeValue" />
+      <span id="currentTime">00:00</span>
+      <span>/</span>
+      <span id="totalTime">00:00</span>
+    </div>
+
+    <script>
+      const video = document.querySelector("video");
+      const videoController = document.getElementById("videoController");
+      const psBtn = videoController.querySelector("#playPauseBtn");
+      const volumeBtn = videoController.querySelector("#volume");
+      const volumeRange = videoController.querySelector("#volumeRange");
+      const timeRange = videoController.querySelector("#timeValue");
+      const totalTime = videoController.querySelector("#totalTime");
+      const currentTime = videoController.querySelector("#currentTime");
+
+      let volumeValue = 0.5;
+      video.volume = volumeValue;
+
+      let timeValue = video.currentTime;
+      video.currentTime = timeValue;
+
+      const formatTime = (seconds) =>
+        new Date(seconds * 1000).toISOString().substr(14, 5);
+
+      const handleTime = (event) => {
+        // console.log(event.target.value);
+        const {
+          target: { value },
+        } = event;
+        video.currentTime = timeValue = value;
+      };
+
+      const handleLoadeMetadata = () => {
+        totalTime.innerHTML = formatTime(Math.floor(video.duration));
+      };
+      const handleTimeUpdate = () => {
+        currentTime.innerHTML = formatTime(Math.floor(video.currentTime));
+        currentTime.value = video.currentTime;
+        // console.log(currentTime.value);
+      };
+
+      timeRange.addEventListener("input", handleTime);
+      video.addEventListener("loadedmetadata", handleLoadeMetadata);
+      video.addEventListener("timeupdate", handleTimeUpdate);
+
+      //   단축키 사용
+      document.addEventListener("keyup", (event) => {
+        if (event.code === "Space") {
+          handlePlayAndStop();
+        }
+      });
+
+      //풀스크린린
+      const handleFullscreen = () => {
+        const fullscreen = document.fullscreenElement;
+        if (fullscreen) {
+          document.exitFullscreen();
+        } else {
+          video.requestFullscreen();
+        }
+        // console.log("fullscreen");
+      };
+
+      document.addEventListener("keyup", (event) => {
+        if (event.code === "Enter") {
+          handleFullscreen();
+        }
+      });
+
+      const handlePlayAndStop = () => {
+        if (video.paused) {
+          video.play();
+          psBtn.className = "fas fa-pause";
+        } else {
+          video.pause();
+          psBtn.className = "fas fa-play";
+        }
+      };
+
+      const handleSound = () => {
+        if (video.muted) {
+          video.muted = false;
+          volumeRange.value = volumeValue;
+          volumeBtn.className = "fas fa-volume-up";
+        } else {
+          video.muted = true;
+          volumeRange.value = 0;
+          volumeBtn.className = "fas fa-volume-mute";
+        }
+      };
+
+      const handleVolume = (event) => {
+        // console.log(event.target.value); 볼륨값 추출
+        const {
+          target: { value },
+        } = event;
+        if (video.muted) {
+          video.muted = false;
+          volumeBtn.className = "fas fa-volume-mute";
+        }
+        if (value === "0") {
+          volumeBtn.className = "fas fa-volume-off";
+        } else {
+          volumeBtn.className = "fas fa-volume-up";
+        }
+        video.volume = volumeValue = value;
+      };
+
+      psBtn.addEventListener("click", handlePlayAndStop);
+      volumeBtn.addEventListener("click", handleSound);
+      volumeRange.addEventListener("input", handleVolume);
+    </script>
+  </body>
+</html>
